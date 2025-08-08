@@ -1,61 +1,74 @@
-# S84_ANU_NextGenLingo# NextGenLingo
+S84_ANU_NextGenLingo
+NextGenLingo
+NextGenLingo is an advanced, next-generation conversational AI agent combining powerful language understanding, flexible document retrieval, actionable automation, and structured output. It’s built for reliability, efficiency, and scalability—making it ideal for automating workflows, querying knowledge bases, extracting insights, and delivering personalized tutoring.
 
-NextGenLingo is an advanced next-generation conversational AI agent that combines powerful language understanding, flexible retrieval from documents, actionable automation, and structured outputs. Whether you're looking to automate workflows, query knowledge bases, extract insights from documents, or get personalized tutoring, NextGenLingo is designed with modern GenAI patterns for reliability and extensibility.
+🚀 Features
+Document Q&A with Citations: Upload and query files; answers grounded in your documents with cited references.
 
----
+Personalized Language Tutoring: AI-powered quizzes and custom lessons with instant feedback.
 
-## 🚀 Features
+Workflow Automation: Schedule meetings, send emails, or perform operations via secure function calling.
 
-- **Document Q&A with Citations:** Upload and query files. Get answers grounded in your documents, with cited references.
-- **Personalized Language Tutoring:** Receive instant feedback, AI-powered quizzes, and custom English lessons adapted to your performance.
-- **Workflow Automation:** Schedule meetings, send emails, or perform custom operations—right from chat, via secure function calling.
-- **Contextual Memory:** The AI remembers ongoing conversations, user preferences, and context, allowing truly personalized and multi-turn discussions.
-- **Structured Outputs:** Generate results in JSON, Markdown, or other formats, making it easy to use results in reports or integrate with other systems.
-- **Multi-source Retrieval:** Combines company docs, public resources, and web results for well-rounded, robust answers.
+Contextual Memory: Multi-turn conversation, user preferences, and context retention for personalized experiences.
 
----
+Structured Outputs: Results in JSON, Markdown, or other formats for reporting and easy integration.
 
-## ✨ Example Use Cases
+Multi-source Retrieval: Combines company docs, public resources, and web results for comprehensive answers.
 
-- Upload a legal agreement and get a summary of obligations and deadlines.
-- Get an AI-powered language lesson or correction of your writing sample.
-- Ask "Book a meeting with Alex about last month's sales report"—NextGenLingo completes the workflow.
-- Request "Show me the latest research on climate change in tabular format"—and get data you can copy or analyze further.
+✨ Example Use Cases
+Summarize deadlines from legal agreements.
 
----
+AI-powered correction of writing samples and interactive learning.
 
-## 🏗️ Architecture Overview
+Automate tasks (e.g., "Book a meeting with Alex about sales").
 
+Request data in customized formats (e.g., "Tabular research on climate change").
+
+🏗️ Architecture Overview
+text
 User ⇄ Chat UI ⇄ Backend Orchestrator
-│ │
-▼ ▼
-[System + User Prompts][RAG Engine] ↔ [Document/Data Store]
-│ │
-▼ │
-[Function Calling Layer]│
-▼ │
-[External APIs/Tools] │
-▼ ▼
+       │              │
+       ▼              ▼
+[System + User Prompts][RAG Engine] ⇄ [Document/Data Store]
+       │              │
+       ▼              │
+[Function Calling Layer]
+       ▼
+[External APIs/Tools]
+       ▼
 [Structured Output Formatter]
+🧑💻 Project Workflow
+User asks a question or uploads a file.
 
+Backend assembles prompts (system, user, memory).
 
----
+Intent Detection:
 
-## 🧑‍💻 Project Workflow
+Info retrieval → RAG fetches context.
 
-1. **User asks a question or uploads a file.**
-2. **Backend assembles prompts** (system, user, memory).
-3. **LLM identifies intent:**
-    - If information retrieval is needed → uses RAG to fetch supporting context.
-    - If an action is needed → generates a function call to trigger (ex: calendar API).
-    - If structured output is needed → returns result in the requested format.
-4. **User receives answer**—with citations, actions completed, or data structured for easy re-use.
-5. **Conversation history is updated** for personalized, smarter future exchanges.
+Action → Function call (e.g., calendar API).
 
----
+Structured output → Requested format (JSON, Markdown, table).
 
+User receives answer—with citations, completed actions, or structured data.
 
-## 🙌 Contributions
+Conversation history is updated for smarter, personalized exchanges.
 
-Love this project? Want more functionality, integrations, or UI tweaks? Open a pull request! Contributions and issue reports are welcome.
+🏆 Evaluation Criteria
+Correctness
+Answers and actions are accurate, relevant, and always grounded in provided data and documents.
 
+Structured outputs are validated for format and integrity before delivery.
+
+Efficiency
+Fast response times via optimized retrieval and lightweight orchestration.
+
+Backend routes requests to the right submodule (RAG, Function Calling, Output Formatter) instantly.
+
+Scalability
+Supports high user volume and large documents through modular, stateless API design.
+
+Utilizes cloud-native storage and batching; horizontal scaling lets the platform handle spikes without performance loss.
+
+🙌 Contributions
+Want to improve NextGenLingo? Add new tools, integrations, or UI features—open PRs and issue reports are welcome!
