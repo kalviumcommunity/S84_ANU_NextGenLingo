@@ -48,6 +48,6 @@ def multi_shot_prompt_gemini(user_question):
 
 
 if __name__ == "__main__":
-    question = "What is the capital of France?"
+    question = "What is the capital of INDIA?"
     print("Question:", question)
     print("Answer:", multi_shot_prompt_gemini(question))
