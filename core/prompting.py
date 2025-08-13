@@ -119,7 +119,7 @@ if __name__ == "__main__":
         "'answer', 'sources' (if any). Do not include any other text."   
         
     )
-    user_text = "Explain the process of photosynthesis and list sources if available."
+    user_text = "what is python ?"
 
     print("\n--- SYSTEM + USER PROMPT ---")
     print("System Prompt:", sys_text)
