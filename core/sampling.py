@@ -2,15 +2,15 @@ import os
 import requests
 from dotenv import load_dotenv
 
-# Load API key from .env file
+# Load environment variables from .env file
 load_dotenv()
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
-def generate_with_temperature(prompt, temperature=1.0):
+def generate_with_top_k(prompt, top_k=40):
     """
-    Generate content from Gemini API while controlling temperature.
-    Lower temp -> more deterministic.
-    Higher temp -> more creative/random.
+    Generate content from Gemini API while controlling top-k sampling.
+    - Lower top_k restricts choices, resulting in more focused output.
+    - Higher top_k allows more diverse output.
     """
     url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
 
@@ -19,10 +19,9 @@ def generate_with_temperature(prompt, temperature=1.0):
         "X-goog-api-key": GEMINI_API_KEY
     }
 
-    # ✅ Temperature must be inside generationConfig
     data = {
         "generationConfig": {
-            "temperature": temperature
+            "topK": top_k
         },
         "contents": [
             {
@@ -33,17 +32,15 @@ def generate_with_temperature(prompt, temperature=1.0):
         ]
     }
 
-    # Send POST request to Gemini API
     response = requests.post(url, headers=headers, json=data)
     response_json = response.json()
 
     if response.status_code != 200:
         raise Exception(f"API call failed: {response_json}")
 
-    # Extract only the generated text
     return response_json["candidates"][0]["content"]["parts"][0]["text"]
 
 if __name__ == "__main__":
-    test_prompt = "2 lines on butterfly"
-    print("Temperature 0.2:\n", generate_with_temperature(test_prompt, 0.2))
-    print("\nTemperature 0.8:\n", generate_with_temperature(test_prompt, 0.8))
+    test_prompt = "Describe a futuristic city skyline."
+    print("Top-K 10:\n", generate_with_top_k(test_prompt, 10))
+    print("\nTop-K 80:\n", generate_with_top_k(test_prompt, 80))
