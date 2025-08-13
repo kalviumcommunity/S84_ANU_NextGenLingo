@@ -1,33 +1,83 @@
+"""
+core/function_calling.py
+========================
+This module contains backend automation function implementations
+for NextGenLingo — the advanced conversational AI system.
+
+These functions are triggered based on detected user intent,
+allowing the assistant to perform actions like sending emails,
+adding tasks, retrieving data, or controlling external services.
+"""
+
+import datetime
+import pytz 
+
 def execute_action(action_name, params):
     """
-    Executes backend actions based on intent.
+    Executes backend actions based on intent and parameters.
+    
+    :param action_name: The action/intent name (string).
+    :param params: Dictionary of parameters for the action.
+    :return: String result message.
     """
+    if action_name == "get_time":
+        # Use local timezone; or specify e.g. pytz.timezone('Asia/Kolkata')
+        now = datetime.now().strftime("%A, %B %d, %Y")
+        print(f"[Action] Retrieved system date: {now}")
+        return f"Today is {now}."
+    
+    # ---- EMAIL SENDING ----
     if action_name == "send_email":
-        # Here, simulate sending email
-        to = params.get("to")
-        subject = params.get("subject")
+        to = params.get("to", "unknown recipient")
+        subject = params.get("subject", "No Subject")
         body = params.get("body", "")
-        # In real app, integrate with email service here
-        print(f"Sending email to {to} with subject '{subject}'. Body: {body}")
-        return f"Email has been sent to {to} with subject '{subject}'."
-    
+        # Simulated action (replace with real email API integration)
+        print(f"[Action] Sending email to {to} | Subject: '{subject}' | Body: {body}")
+        return f"✅ Email sent to {to} with subject '{subject}'."
+
+    # ---- ADD TO-DO TASK ----
     elif action_name == "add_todo":
-        task = params.get("task")
-        # Simulate adding to a todo list
-        print(f"Added TODO task: {task}")
-        return f"Task '{task}' added to your to-do list."
-    
+        task = params.get("task", "Unnamed task")
+        # Simulated action (replace with real to-do system integration)
+        print(f"[Action] Adding task to to-do list: {task}")
+        return f"📝 Task '{task}' added to your to-do list."
+
+    # ---- WEATHER INFORMATION ----
     elif action_name == "weather":
         location = params.get("location", "your area")
-        # Simulate weather API call
-        print(f"Fetching weather for {location}")
-        return f"The weather in {location} is sunny and warm today."
-    
-    else:
-        return "Sorry, I don't recognize that action."
+        # Simulated response (replace with actual weather API call)
+        print(f"[Action] Fetching weather for {location}")
+        return f"☀ The weather in {location} is sunny and warm today."
 
-# Sample usage
+    # ---- CURRENT TIME ----
+    elif action_name == "get_time":
+        # Returns current time (could be timezone-aware)
+        now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        print(f"[Action] Retrieved system time: {now}")
+        return f"⏰ Current time: {now}"
+
+    # ---- FALLBACK ----
+    else:
+        print(f"[Error] Unknown action: {action_name}")
+        return "❌ Sorry, I don't recognize that action."
+
+
+# Standalone test cases
 if __name__ == "__main__":
-    print(execute_action("send_email", {"to": "user@example.com", "subject": "Meeting Reminder", "body": "Don't forget the meeting at 3 PM."}))
-    print(execute_action("add_todo", {"task": "Finish the project report"}))
-    print(execute_action("weather", {"location": "New York"}))
+    print(execute_action("send_email", {
+        "to": "user@example.com",
+        "subject": "Meeting Reminder",
+        "body": "Don't forget our 3 PM meeting today."
+    }))
+    
+    print(execute_action("add_todo", {
+        "task": "Finish the project report"
+    }))
+    
+    print(execute_action("weather", {
+        "location": "New York"
+    }))
+
+    print(execute_action("get_time", {}))
+
+    print(execute_action("unknown_action", {}))
