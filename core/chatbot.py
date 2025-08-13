@@ -8,6 +8,7 @@ import os
 import re
 import sys
 from dotenv import load_dotenv
+import json
 
 # Ensure project root is in sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
@@ -20,6 +21,18 @@ load_dotenv()
 
 # Conversation history list
 conversation_history = []
+
+MEMORY_FILE = "conversation_memory.json"
+
+def load_conversation_history():
+    if os.path.exists(MEMORY_FILE):
+        with open(MEMORY_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    return []
+
+def save_conversation_history(history):
+    with open(MEMORY_FILE, "w", encoding="utf-8") as f:
+        json.dump(history, f, indent=2)
 
 # -----------------------
 # Intent Detection (same as before)
