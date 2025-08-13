@@ -35,6 +35,6 @@ def zero_shot_prompt_gemini(user_question):
 
 
 if __name__ == "__main__":
-    question = "Translate 'Good morning' into Spanish"
+    question = "Capital of India"
     print("Question:", question)
     print("Answer:", zero_shot_prompt_gemini(question))
