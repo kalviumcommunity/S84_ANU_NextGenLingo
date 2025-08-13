@@ -44,6 +44,6 @@ def generate_with_temperature(prompt, temperature=1.0):
     return response_json["candidates"][0]["content"]["parts"][0]["text"]
 
 if __name__ == "__main__":
-    test_prompt = "Write a creative sentence about a sunset."
+    test_prompt = "2 lines on butterfly"
     print("Temperature 0.2:\n", generate_with_temperature(test_prompt, 0.2))
     print("\nTemperature 0.8:\n", generate_with_temperature(test_prompt, 0.8))
