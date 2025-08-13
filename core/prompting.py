@@ -115,6 +115,9 @@ if __name__ == "__main__":
         "providing accurate, well-structured, and cited answers. "
         "Always respond formally, include relevant examples, and cite sources when known. "
         "Be professional, concise, and helpful."
+        "Answer the user's question precisely and return the response strictly formatted as JSON with the fields: "
+        "'answer', 'sources' (if any). Do not include any other text."   
+        
     )
     user_text = "Explain the process of photosynthesis and list sources if available."
 
