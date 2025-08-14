@@ -3,5 +3,10 @@
     "id": "doc1",
     "source": "SampleDoc.txt",
     "content": "Paris is the capital city of France, known for the Eiffel Tower."
+  },
+  {
+    "id": "doc1",
+    "source": "SampleDoc.txt",
+    "content": "Paris is the capital city of France, known for the Eiffel Tower."
   }
 ]
