@@ -33,6 +33,14 @@ def l2_distance(vec_a, vec_b):
     b = np.array(vec_b)
     return np.linalg.norm(a - b)
 
+def dot_product_similarity(vec_a, vec_b):
+    """
+    Compute the dot product between two vectors.
+    Higher value means more similar.
+    """
+    a = np.array(vec_a)
+    b = np.array(vec_b)
+    return np.dot(a, b)
 
 if __name__ == "__main__":
     # Sample texts
@@ -45,14 +53,20 @@ if __name__ == "__main__":
     emb_doc = generate_embedding(doc_text)
     emb_unrelated = generate_embedding(unrelated_text)
 
-    # Compute cosine similarities
+    # Cosine similarities
     cosine_sim_related = cosine_similarity(emb_query, emb_doc)
     cosine_sim_unrelated = cosine_similarity(emb_query, emb_unrelated)
     print(f"Cosine Similarity (query vs. related doc): {cosine_sim_related:.4f}")
     print(f"Cosine Similarity (query vs. unrelated doc): {cosine_sim_unrelated:.4f}")
 
-    # Compute Euclidean distances
+    # Euclidean distances
     l2_dist_related = l2_distance(emb_query, emb_doc)
     l2_dist_unrelated = l2_distance(emb_query, emb_unrelated)
     print(f"L2 Distance (query vs. related doc): {l2_dist_related:.2f}")
     print(f"L2 Distance (query vs. unrelated doc): {l2_dist_unrelated:.2f}")
+
+    # Dot Similarity
+    dot_sim_related = dot_product_similarity(emb_query, emb_doc)
+    dot_sim_unrelated = dot_product_similarity(emb_query, emb_unrelated)
+    print(f"Dot Product (query vs. related doc): {dot_sim_related:.2f}")
+    print(f"Dot Product (query vs. unrelated doc): {dot_sim_unrelated:.2f}")
