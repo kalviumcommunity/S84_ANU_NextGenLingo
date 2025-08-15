@@ -38,3 +38,4 @@ if __name__ == "__main__":
     emb_unrelated = generate_embedding(unrelated)
     unrelated_score = cosine_similarity(emb_query, emb_unrelated)
     print(f"Cosine Similarity (query vs. unrelated): {unrelated_score:.4f}")
+
