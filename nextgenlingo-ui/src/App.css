@@ -1,0 +1,123 @@
+.container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px 25px;
+  border: 1.5px solid #1e90ff;
+  border-radius: 15px;
+  background: #f9fbff;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #1e90ff;
+  font-weight: 700;
+}
+
+.file-upload-label {
+  display: block;
+  background-color: #1e90ff;
+  color: white;
+  padding: 8px 15px;
+  border-radius: 8px;
+  width: fit-content;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+
+.file-upload-label:hover {
+  background-color: #155db2;
+}
+
+.chat-window {
+  background: white;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  height: 400px;
+  overflow-y: auto;
+  padding: 14px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+}
+
+.msg {
+  margin-bottom: 12px;
+  max-width: 80%;
+  word-wrap: break-word;
+  padding: 12px 14px;
+  border-radius: 12px;
+  box-shadow: 0 1px 4px rgb(0 0 0 / 0.1);
+  font-size: 1rem;
+  position: relative;
+}
+
+.msg.user {
+  background-color: #d0ebff;
+  align-self: flex-end;
+  text-align: right;
+}
+
+.msg.bot {
+  background-color: #e6f0ff;
+  align-self: flex-start;
+  text-align: left;
+}
+
+.msg-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #334155;
+}
+
+.timestamp {
+  font-weight: 400;
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+.input-bar {
+  display: flex;
+  gap: 10px;
+}
+
+input[type="text"],
+input[type="text"]:focus {
+  flex-grow: 1;
+  padding: 12px 18px;
+  border-radius: 12px;
+  border: 1.5px solid #1e90ff;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+input[type="text"]:focus {
+  border-color: #155db2;
+}
+
+button {
+  background-color: #1e90ff;
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 12px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.25s;
+  font-weight: 600;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+button:hover:not(:disabled) {
+  background-color: #155db2;
+}

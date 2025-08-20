@@ -4,7 +4,16 @@ core/rag_engine.py
 Retrieval Augmented Generation (RAG) orchestration for NextGenLingo.
 """
 
-import embeddings, vector_store, prompting, dynamic_prompting
+import embeddings
+import vector_store
+import prompting
+from dynamic_prompting import (
+    build_summary_prompt,
+    build_quiz_prompt,
+    build_flashcards_prompt,
+    build_code_review_prompt,
+    build_debate_prompt,
+)
 
 
 def add_document(text, doc_id=None, source=None):
@@ -27,16 +36,18 @@ def build_context_from_results(results):
     return "\n---\n".join(context_parts)
 
 
-def query_with_rag(user_query, conversation_history=None, top_k=3):
+def query_with_rag(user_query, conversation_history=None, top_k=3, output_format=None, intent="summary"):
     """
     Runs a query through the RAG pipeline:
     1. Embed query
     2. Search vector DB
     3. Build context
-    4. Construct dynamic prompt
+    4. Construct dynamic prompt based on intent/mode
     5. Get answer from LLM
+
+    Supports optional output_format (e.g., "json", "markdown") for structured responses.
     """
-    # Step 1: Query embedding
+    # Step 1: Embed query
     query_emb = embeddings.generate_embedding(user_query)
 
     # Step 2: Retrieve similar docs
@@ -48,13 +59,20 @@ def query_with_rag(user_query, conversation_history=None, top_k=3):
     # Step 4: Append conversation history if provided
     conversation = conversation_history if conversation_history else []
 
-    # Step 5: Dynamic prompt with context
-    prompt_text = dynamic_prompting.build_dynamic_prompt(
-        user_query=user_query,
-        conversation_history=conversation,
-        retrieved_context=retrieved_context,
-        output_format=None
-    )
+    # Step 5: Build prompt with mode/intent
+    if intent == "summary":
+        prompt_text = build_summary_prompt(user_query, conversation, retrieved_context, output_format)
+    elif intent == "quiz":
+        prompt_text = build_quiz_prompt(user_query, conversation, retrieved_context)
+    elif intent == "flashcards":
+        prompt_text = build_flashcards_prompt(user_query, conversation, retrieved_context)
+    elif intent == "code_review":
+        prompt_text = build_code_review_prompt(user_query, conversation, retrieved_context)
+    elif intent == "debate":
+        prompt_text = build_debate_prompt(user_query, conversation, retrieved_context)
+    else:
+        # Default fallback to summary prompt
+        prompt_text = build_summary_prompt(user_query, conversation, retrieved_context, output_format)
 
     # Step 6: Send to LLM
     system_prompt = (
@@ -75,6 +93,6 @@ if __name__ == "__main__":
     sample_doc = "Paris is the capital city of France, known for the Eiffel Tower."
     add_document(sample_doc, doc_id="doc1", source="SampleDoc.txt")
 
-    # Run a query
+    # Run a query as a test
     query = "What is the capital of France?"
     print("RAG Answer:\n", query_with_rag(query))

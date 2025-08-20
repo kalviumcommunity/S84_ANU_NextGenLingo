@@ -26,14 +26,20 @@ def init_index(dimension: int):
 
 
 def load_vector_store():
-    """Loads saved index and metadata from disk if available."""
     global index, metadata, EMBEDDING_DIM
     if os.path.exists(VECTOR_STORE_INDEX_FILE):
         index = faiss.read_index(VECTOR_STORE_INDEX_FILE)
         EMBEDDING_DIM = index.d
     if os.path.exists(VECTOR_STORE_META_FILE):
-        with open(VECTOR_STORE_META_FILE, "r", encoding="utf-8") as f:
-            metadata = json.load(f)
+        try:
+            with open(VECTOR_STORE_META_FILE, "r", encoding="utf-8") as f:
+                metadata = json.load(f)
+        except json.JSONDecodeError:
+            print(f"Warning: {VECTOR_STORE_META_FILE} is empty or corrupted, resetting metadata.")
+            metadata = []
+            # Optionally remove the file
+            os.remove(VECTOR_STORE_META_FILE)
+
 
 
 def save_vector_store():
