@@ -50,19 +50,29 @@ def parse_quiz(llm_output):
 
 @app.post("/chat")
 async def chat_endpoint(request: Request):
+    print("Received chat request")
     data = await request.json()
     query = data.get("query", "")
-    intent = data.get("intent", "summary")  # default intent/mode
-    conversation_history = data.get("conversation_history", None)
+    intent = data.get("intent", "summary")
+    print("Query:", query, "Intent:", intent)
 
     try:
-        answer = query_with_rag(query, conversation_history=conversation_history, intent=intent)
+        answer = query_with_rag(query, conversation_history=None, intent=intent)
+        print("RAG output:", answer)
 
         if intent == "quiz":
+            print("Raw Quiz LLM Output:\n", answer)
             questions = parse_quiz(answer)
+            print("Parsed Questions:\n", questions)
+            if not questions:
+                return {
+                    "type": "text",
+                    "response": "Sorry, could not generate a quiz. Try changing your request, or upload more relevant content.",
+                    "sources": []
+                }
             return {"type": "quiz", "questions": questions, "sources": []}
 
-        # For all other intents, return text response
+        # For other intents, or fallback
         return {"type": "text", "response": answer, "sources": []}
 
     except Exception as e:

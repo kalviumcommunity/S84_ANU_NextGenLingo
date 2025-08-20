@@ -188,40 +188,59 @@ function App() {
     }
   };
 
-  // Render messages based on their type
-  const renderMessage = (msg, idx) => {
-    switch (msg.type) {
-      case "quiz":
-        return <Quiz key={idx} questions={msg.questions} onComplete={(answers) => alert("Quiz submitted!")} />;
-      case "text":
-      default:
-        return (
-          <ListItem
-            key={idx}
-            alignItems="flex-start"
-            sx={{
-              flexDirection: msg.role === "user" ? "row-reverse" : "row",
-              textAlign: msg.role === "user" ? "right" : "left",
-            }}
-          >
-            <ListItemText
-              primary={
-                <Typography component="span" variant="subtitle2" color={msg.role === "user" ? "primary" : "secondary"}>
-                  {msg.role === "user" ? "You" : "Bot"}
-                </Typography>
-              }
-              secondaryTypographyProps={{ component: "div" }}
-              secondary={
-                <div style={{ marginTop: 8 }}>
-                  <ReactMarkdown>{msg.content}</ReactMarkdown>
-                  <CitationChips sources={msg.sources} />
-                </div>
-              }
-            />
-          </ListItem>
-        );
-    }
-  };
+const renderMessage = (msg, idx) => {
+  // Defensive check for null or missing type
+  if (!msg || !msg.type) {
+    return (
+      <ListItem key={idx}>
+        <ListItemText primary={<em>Received invalid response from server.</em>} />
+      </ListItem>
+    );
+  }
+  
+  switch (msg.type) {
+    case "quiz":
+      return (
+        <Quiz
+          key={idx}
+          questions={msg.questions}
+          onComplete={(answers) => alert("Quiz submitted!")}
+        />
+      );
+    case "text":
+    default:
+      return (
+        <ListItem
+          key={idx}
+          alignItems="flex-start"
+          sx={{
+            flexDirection: msg.role === "user" ? "row-reverse" : "row",
+            textAlign: msg.role === "user" ? "right" : "left",
+          }}
+        >
+          <ListItemText
+            primary={
+              <Typography
+                component="span"
+                variant="subtitle2"
+                color={msg.role === "user" ? "primary" : "secondary"}
+              >
+                {msg.role === "user" ? "You" : "Bot"}
+              </Typography>
+            }
+            secondaryTypographyProps={{ component: "div" }}
+            secondary={
+              <div style={{ marginTop: 8 }}>
+                <ReactMarkdown>{msg.content || msg.response || ""}</ReactMarkdown>
+                <CitationChips sources={msg.sources} />
+              </div>
+            }
+          />
+        </ListItem>
+      );
+  }
+};
+
 
   return (
     <Container

@@ -14,6 +14,8 @@ from dynamic_prompting import (
     build_code_review_prompt,
     build_debate_prompt,
 )
+from dynamic_prompting import build_dynamic_prompt
+
 
 
 def add_document(text, doc_id=None, source=None):
@@ -37,50 +39,35 @@ def build_context_from_results(results):
 
 
 def query_with_rag(user_query, conversation_history=None, top_k=3, output_format=None, intent="summary"):
-    """
-    Runs a query through the RAG pipeline:
-    1. Embed query
-    2. Search vector DB
-    3. Build context
-    4. Construct dynamic prompt based on intent/mode
-    5. Get answer from LLM
-
-    Supports optional output_format (e.g., "json", "markdown") for structured responses.
-    """
-    # Step 1: Embed query
+    # Step 1: Embed the user query
     query_emb = embeddings.generate_embedding(user_query)
-
-    # Step 2: Retrieve similar docs
+    
+    # Step 2: Retrieve similar document chunks from vector store
     results = vector_store.search_similar(query_emb, top_k=top_k)
-
-    # Step 3: Context from retrieved docs
+    
+    # Step 3: Build retrieved context text from search results
     retrieved_context = build_context_from_results(results)
-
-    # Step 4: Append conversation history if provided
+    
+    # Step 4: Use provided conversation history or empty list
     conversation = conversation_history if conversation_history else []
-
-    # Step 5: Build prompt with mode/intent
-    if intent == "summary":
-        prompt_text = build_summary_prompt(user_query, conversation, retrieved_context, output_format)
-    elif intent == "quiz":
-        prompt_text = build_quiz_prompt(user_query, conversation, retrieved_context)
-    elif intent == "flashcards":
-        prompt_text = build_flashcards_prompt(user_query, conversation, retrieved_context)
-    elif intent == "code_review":
-        prompt_text = build_code_review_prompt(user_query, conversation, retrieved_context)
-    elif intent == "debate":
-        prompt_text = build_debate_prompt(user_query, conversation, retrieved_context)
-    else:
-        # Default fallback to summary prompt
-        prompt_text = build_summary_prompt(user_query, conversation, retrieved_context, output_format)
-
-    # Step 6: Send to LLM
+    
+    # Step 5: Build prompt dynamically using mode/intent
+    prompt_text = build_dynamic_prompt(
+        user_query=user_query,
+        conversation_history=conversation,
+        retrieved_context=retrieved_context,
+        output_format=output_format,
+        mode=intent
+    )
+    
+    # Step 6: Compose system prompt and send full prompt to your LLM interface
     system_prompt = (
         "You are NextGenLingo, an intelligent AI assistant. "
         "Use the provided context to answer the user accurately with citations."
     )
     answer = prompting.system_user_prompt(system_prompt, prompt_text)
     return answer
+
 
 
 if __name__ == "__main__":
