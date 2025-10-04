@@ -8,3 +8,4 @@ sse-starlette
 openai
 pinecone-client
 faiss-cpu
+requests 
