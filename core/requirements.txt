@@ -1,0 +1,10 @@
+fastapi
+uvicorn[standard]
+python-dotenv
+pdfplumber
+sse-starlette
+
+# AI and Vector Store Libraries 
+openai
+pinecone-client
+faiss-cpu
