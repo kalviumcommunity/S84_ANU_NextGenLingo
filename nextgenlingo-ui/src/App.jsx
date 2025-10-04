@@ -267,7 +267,7 @@ function App() {
   const [query, setQuery] = useState("");
   const [chat, setChat] = useState([]);
   const [loading, setLoading] = useState(false);
-  const BACKEND_URL = "http://localhost:8000";
+  const BACKEND_URL = "https://nextgenlingo-api.onrender.com";
   const bottomRef = useRef(null);
 
   // Auto-scroll chat to bottom on new messages
