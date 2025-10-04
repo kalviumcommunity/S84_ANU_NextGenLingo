@@ -1,6 +1,6 @@
 NextGenLingo...
 ~ By Anu 🤍
-Live Demo: [Next-Gen-Lingo](nextgenlingo-genai.netlify.app)
+Live Demo: [Next-Gen-Lingo](https://nextgenlingo-genai.netlify.app)
 
 NextGenLingo is a custom-built conversational AI designed to be more than just a chatbot.
 My goal was to create an intelligent agent that can understand and interact with documents, automate tasks, and even act as a personalized study tutor.
