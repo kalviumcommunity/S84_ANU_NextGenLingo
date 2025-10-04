@@ -9,3 +9,6 @@ openai
 pinecone-client
 faiss-cpu
 requests 
+python-multipart
+
+
