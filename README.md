@@ -1,146 +1,49 @@
-S84_ANU_NextGenLingo
-NextGenLingo
-NextGenLingo is an advanced, next-generation conversational AI agent designed to revolutionize information access, automation, and personalized learning. By integrating state-of-the-art language models with document retrieval, function calling, and structured output, NextGenLingo delivers correct, efficient, and scalable solutions for knowledge querying and workflow automation.
+NextGenLingo...
+~ By Anu 🤍
+Live Demo: [nextgenlingo-genai.netlify.app](Next-Gen-Lingo)
 
-🌟 Project Overview
-NextGenLingo enables users to interact naturally using chat, upload documents, request tasks (like scheduling or emailing), and receive personalized language guidance. It acts as an intelligent bridge between human requests and digital actions or data—grounding every response in reliable sources and high technical rigor.
+NextGenLingo is a custom-built conversational AI designed to be more than just a chatbot.
+My goal was to create an intelligent agent that can understand and interact with documents, automate tasks, and even act as a personalized study tutor.
 
-🚀 Key Features
-Document Question Answering (with Citations):
-Ask questions on uploaded files (PDFs, docs, images). The agent retrieves, analyzes, and answers—referencing specific source passages.
+It uses Retrieval-Augmented Generation (RAG) to ground its answers in reliable sources, ensuring that when you ask a question about an uploaded PDF, the answers are accurate and come with citations. Beyond simple Q&A, I've integrated function-calling capabilities to let the AI interact with external tools, along with structured output to get information back in useful formats like JSON or Markdown tables.
 
-Personalized Language Tutoring:
-Interactive quizzes, grammar correction, and tailored lessons leveraging user mistakes and learning history.
+`CORE FEATURES`  
+Document Q&A with Sources: Upload a PDF and ask questions. The AI will analyze the text and provide answers with direct references to the source material.
 
-Workflow Automation (Function Calling):
-Trigger external tools, schedule events, or fetch real-time info (e.g., calendar, CRM, weather) securely within the chat.
+Personalized Language Tutor: The agent can generate interactive quizzes, correct grammar, and provide tailored lessons on demand.
 
-Multi-turn Contextual Memory:
-Remembers previous conversations, user preferences, and document history for deeply personalized, coherent, multi-step dialogs.
+Task Automation: Ask the AI to schedule an event or fetch data from an API. It's designed to connect conversation to action.
 
-Structured Output:
-Returns answers in user-specified formats (JSON, Markdown, tables) for seamless reporting, analytics, or system integration.
+Structured Data Output: Request information in specific formats like a JSON object or a Markdown table for easy use in other applications.
 
-Multi-source Retrieval Augmented Generation (RAG):
-Combines company docs, web resources, and databases for comprehensive, well-grounded answers.
+Contextual Memory: The agent remembers the flow of conversation, allowing for more natural and multi-step interactions.
 
-✨ Example Use Cases
-Legal Compliance: Upload a contract, ask "What are all the deadlines?", and get a cited, structured table.
+`TECHNOLOGY`
+Frontend: React (Vite) with Material-UI, deployed on Netlify.
 
-Language Learning: "Correct my email draft" or "Quiz me on past-tense verbs." Receive instant, personalized feedback.
+Backend: Python with FastAPI, deployed on Render.
 
-Business Automation: "Schedule demo with client and share product deck"—the agent books meetings & sends files.
+AI Engine: Built using modern LLMs and a vector database for the RAG pipeline.
 
-Custom Data Extraction: "List all expenses by category from this report in JSON"—handy for finance or analytics.
+`RUNNING LOCALLY`
 
-Research & Discovery: "Get latest AI news and summarize key trends in a Markdown table."
+Clone the repo:
 
-🏗️ High-Level Technical Architecture
-text
-             +----------------------+
-             |      User / UI       |
-             +----------------------+
-                        │
-              ▼ (chat, files/requests)
-         +----------------------------+
-         |   Backend Orchestrator     |          (Python/Node.js)
-         +----------------------------+
-            │      │            │
-            ▼      ▼            ▼
-   [System/User Prompts]   [Conversation Memory]
-        │                     │
-        ▼                     │
-   +-----------------------------------------+
-   |        Intent/Task Detection            |
-   +-----------------------------------------+
-            │        │          │
-            ▼        ▼          ▼
-   [RAG Engine] [Function Calling] [Output Formatter]
-            │        │          │
-            ▼        ▼          ▼
-   [Docs/DB/Web] [APIs/Tools] [JSON/Markdown/Table]
-            │        │
-            ▼        ▼
-         Result Assembled & Returned to UI
-🧑💻 Detailed Project Workflow
-User Input:
-User sends a question, uploads a file, or requests an action via the chat interface.
-
-Prompt & Context Assembly:
-Backend builds the context: incorporates system prompt (AI's role/goals), user prompt, & historical conversation for context continuity.
-
-Intent & Task Recognition:
-
-Information Retrieval Needed: LLM uses RAG to query documents or knowledge bases, extracts supporting snippets.
-
-Action/Function Required: LLM triggers an external API or function (e.g., calendar, database).
-
-Structured Output Desired: LLM formats the response per user/system requirements (JSON, table, Markdown).
-
-Response Generation & Delivery:
-
-AI generates response using retrieved data or action results.
-
-Results are grounded, well-referenced, and formatted.
-
-UI presents answer, showing sources and structured data if requested.
-
-Contextual Memory Update:
-Session data, preferences, and past exchanges are logged for future interactions, improving personalization and conversational flow.
-
-🏆 Evaluation Criteria Alignment
-Correctness
-
-Answers and actions always validated against source data/documents.
-
-Function calls adhere to secure, well-defined API schemas.
-
-Structured outputs checked for format integrity.
-
-Efficiency
-
-Real-time retrieval from fast vector databases.
-
-Lightweight backend orchestration minimizes latency.
-
-Asynchronous operations enable snappy responses even under load.
-
-Scalability
-
-Modular, stateless APIs support high concurrent usage.
-
-Cloud-native design (e.g., containerization, horizontal scaling).
-
-Optimized data pipelines efficiently handle large files and batch requests.
-
-📈 Implementation Details
-Backend: Python/Node.js serving REST APIs and orchestrating LLMs, RAG, functions.
-
-LLM & RAG: OpenAI GPT / open-source models; vector DBs (Pinecone/FAISS/LlamaIndex).
-
-Front-End: Modern chat UI (React/Streamlit).
-
-Function Calling: Standardized API schemas (JSON), plugins for real-world services (calendar, email, etc.).
-
-Structured Output: Output validation/parsing modules; customizable formats.
-
-Deployment: Containerized for easy cloud hosting and scaling.
-
-📝 Getting Started
-Clone the repository:
 git clone https://github.com/kalviumcommunity/S84_ANU_NextGenLingo.git
+cd S84_ANU_NextGenLingo
 
-Install dependencies:
-Use pip, npm, or relevant manager for backend/frontend.
+     Setup Backend:
 
-Configure environment:
-Set API keys (LLM, DBs), document storage, and endpoint URLs in .env.
+     Navigate to the **core** folder.
 
-Start backend & vector database:
-Follow docs to initialize RAG services or knowledge sources.
+     Run pip install -r requirements.txt.
 
-Launch front-end UI:
-Start the chat interface, interact with your AI assistant!
+     Create a .env file and store API KEY like this ~ GEMINI_API_KEY
 
-🙌 Contributions
-Your ideas are welcome! Add integrations, new features, or polish the UI. Please open Pull Requests or Issues.
+Setup Frontend:
+
+     Run npm install in the root directory.
+
+**Launch**:
+Run **uvicorn api:app --reload** in the /core directory.
+Run **npm run dev** in the root directory.
